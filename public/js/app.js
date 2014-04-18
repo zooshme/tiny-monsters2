@@ -1,50 +1,31 @@
-(function() {
-  var HomeView, Router, Toy, ToyCollection, router, toyCollection, toyCollectionView;
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var App, ap;
 
-  Toy = Backbone.Model.extend({
-    url: '/api/toy'
-  });
+App = window.App || {
+  Models: {},
+  Views: {},
+  Collections: {},
+  Routes: {},
+  Config: {}
+};
 
-  ToyCollection = Backbone.Collection.extend({
-    url: '/api/toylist',
-    model: Toy
-  });
+ap = window.ap || {};
 
-  Router = Backbone.Router.extend({
-    routes: {
-      '': 'home'
-    }
-  });
+App = require('./base');
 
-  router = new Router();
+Backbone.history.start();
 
-  toyCollection = new ToyCollection();
 
-  router.on('route:home', function() {
-    console.log(toyCollection.fetch());
-    return this.view = new HomeView();
-  });
+},{"./base":2}],2:[function(require,module,exports){
+var App;
 
-  HomeView = Backbone.View.extend({
-    tagName: 'div',
-    id: 'home-view',
-    initialize: function() {
-      $('body').html(this.el);
-      return this.render();
-    },
-    render: function() {
-      return this.$el.html('Hello everybody');
-    }
-  });
+App = {
+  start: function() {
+    return console.log('app started!');
+  }
+};
 
-  toyCollectionView = Backbone.View.extend({
-    template: _.template(''),
-    render: function() {
-      this.$el.html(this.template(this.model.attributes));
-      return this;
-    }
-  });
+module.exports = App;
 
-  Backbone.history.start();
 
-}).call(this);
+},{}]},{},[1])
