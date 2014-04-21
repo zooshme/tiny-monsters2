@@ -1,0 +1,22 @@
+body {
+	background-color: $white;
+}
+
+.header {
+	# height: 36px;
+	padding: 10px 0 16px;
+	background-color: #663773;
+	margin-bottom: 10px;
+}
+
+.inner {
+	width: 1200px;
+	margin: 0 auto;
+}
+
+
+.footer {
+	padding: 26px 0 42px;
+	background-color: $black;
+	color: $white;
+}

@@ -1,13 +1,15 @@
-App = window.App || {
+Router = Backbone.Router.extend
+	routes:
+		'' : 'home'
+		'toy/:id': 'toy'
+
+App =
 	Models: {},
 	Views: {},
 	Collections: {},
 	Routes: {},
 	Config: {},
-}
+	Router: new Router()
 
-ap = window.ap || {}
 
-App = require './base'
-
-Backbone.history.start()
+module.exports = App

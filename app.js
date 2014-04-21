@@ -6,8 +6,9 @@ var cookieParser = require('cookie-parser');
 var methodOverride = require('method-override');
 var bodyParser = require('body-parser');
 var r = require('rethinkdb');
-
+var fs = require('fs');
 var app = express();
+var async = require('async');
 //var router = express.Router();
 
 // view engine setup
@@ -36,18 +37,35 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res) {
     res.render('index', {
-        title: 'Tiny Monster'
+        title: 'Tiny Monsters'
     })
 });
 
-app.get('/api/toylist', function(req, res) {
+app.get('/api/toys', function(req, res) {
     onConnect(function(err, conn) {
         console.log(err)
-        r.table('toys').run(conn, function(err, cursor) {
+        r.table('toys').orderBy('name').run(conn, function(err, cursor) {
             console.log(err, cursor)
             cursor.toArray(function(err, toys) {
-                res.json(toys);
-                conn.close();    
+                console.log(toys)
+                async.map(toys, function(toy, callback) {
+                    var pattern = /\s/g;
+                    name = toy.name.toLowerCase().replace(pattern, '_');
+                    var dir = path.join(__dirname, 'public/images/monsters', name);
+                    console.log(dir);
+
+                    var photos = fs.readdirSync(dir)
+                    
+                    var newPhotos = photos.map(function(photo) {
+                        return path.join('images/monsters', name, photo);
+                    });
+                    toy.photos = newPhotos;
+                    callback(null, toy)
+                }, function(err, toys) {
+                    res.json(toys);
+                    conn.close();      
+                })
+                  
             });
             
         });
@@ -55,8 +73,25 @@ app.get('/api/toylist', function(req, res) {
     });
 });
 
-app.get('/api/toys/:toy_id', function() {
+app.get('/api/toy/:toy_id', function(req, res) {
+    onConnect(function(err, conn) {
+        r.table('toys').get(req.params.toy_id).run(conn, function(err, toy) {
+            var pattern = /\s/g;
+            var name = toy.name.toLowerCase().replace(pattern, '_');
+            var dir = path.join(__dirname, 'public/images/monsters', name);
+            
+            var photos = fs.readdirSync(dir);
 
+            var newPhotos = photos.map(function(photo) {
+                return path.join('images/monsters', name, photo);
+            });
+            toy.photos = newPhotos;
+
+            res.json(toy);
+
+            conn.close();
+        });
+    });
 });
 
 app.post('/api/toys', function() {
