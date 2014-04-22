@@ -2,6 +2,7 @@ Router = Backbone.Router.extend
 	routes:
 		'' : 'home'
 		'toy/:id': 'toy'
+		'categories': 'categories'
 
 App =
 	Models: {},

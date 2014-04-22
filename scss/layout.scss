@@ -2,8 +2,7 @@ body {
 	background-color: $white;
 }
 
-.header {
-	# height: 36px;
+.main-header {
 	padding: 10px 0 16px;
 	background-color: #663773;
 	margin-bottom: 10px;
@@ -15,7 +14,7 @@ body {
 }
 
 
-.footer {
+.main-footer {
 	padding: 26px 0 42px;
 	background-color: $black;
 	color: $white;

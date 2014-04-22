@@ -23,8 +23,13 @@ App.Views.Toy = Backbone.View.extend
 App.Router.on 'route:toy', (id) ->
 	console.log id
 	route = @
-	toyModel = new App.Models.Toy {id: id}
-	
-	toyModel.fetch().then (toy) ->
+	toyModel = App.Models.Toy.find {id: id}
+	if toyModel
+		#toyModel.find({id: id}).then (toy) ->
 		route.view = new App.Views.Toy
 			model: toyModel
+	else 
+		toyModel = new App.Models.Toy()
+		toyModel.fetch(data: {id: id}).then (toy) ->
+			route.view = new App.Views.Toy
+				model: toyModel

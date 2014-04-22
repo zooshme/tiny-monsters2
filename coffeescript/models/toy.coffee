@@ -1,7 +1,12 @@
 App = require '../app'
 
-App.Models.Toy = Backbone.Model.extend
+App.Models.Toy = Backbone.RelationalModel.extend
 	url: -> 
-		return '/api/toy/' + @id
+		return '/api/toys'
+	relations: [{
+			type: 'HasOne'
+			key: 'category'
+			relatedModel: App.Models.Category
+		}]
 
 module.exports = App.Models.Toy

@@ -1,9 +1,49 @@
 .toys {
 	.toy {
-		margin-bottom: 26px;
-		
+		margin-bottom: 16px;
+		background-color: white;
+		border: 1px solid hsla(0,0,0,.15);
+		box-sizing: border-box;
+
+		header {
+			@include clearfix;
+			padding: 26px 16px 0;
+			# box-sizing: border-box;
+			display: block;
+		}
+
 		.thumb {
 			width: 100%;
+			border-bottom: 2px dashed hsla(0,0,0,.35);
+			display: block;
+		}
+
+		.name {
+			color: $purple;
+			float: left;
+		}
+
+		.description {
+			padding: 0 16px 26px;
+			color: $grey;
+		}
+
+		.price {
+			color: $turquoise;
+			float: right;
+		}
+
+		.view-details {
+			background-color: $turquoise;
+			color: white;
+			font-weight: 300;
+			padding: 6px 10px;
+			margin: 10px 16px 10px;
+			display: block;
+			font-size: 10px;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+
 		}
 	}
 }
